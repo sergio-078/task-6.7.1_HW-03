@@ -43,7 +43,7 @@
                     <a class="nav-item nav-link" href="/accounts/signup">Вход / Регистрация</a>
                 {% else %}
                     <a class="nav-item nav-link" href="#">Личный кабинет ({{ request.user }})</a>
-                    <a class="nav-item nav-link" href="#">Выход</a>
+                    <a class="nav-item nav-link" href="/accounts/logout/confirm/">Выход</a>
                 {% endif %}
             </div>
           </div>

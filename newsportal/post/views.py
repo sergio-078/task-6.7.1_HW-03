@@ -5,6 +5,7 @@ from django.views.generic import (DetailView, ListView, CreateView, UpdateView, 
 from django.contrib.auth.decorators import login_required
 from django.db.models import Exists, OuterRef
 from django.views.decorators.csrf import csrf_protect
+from django.conf import settings
 
 from .models import Post, Subscription, Category
 from .filters import PostFilter

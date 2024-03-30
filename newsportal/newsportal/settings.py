@@ -1,6 +1,7 @@
 
 import os
 from pathlib import Path
+#from decouple import config
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -138,6 +139,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # перенаправление пользоввателя после аутентификации
 LOGIN_REDIRECT_URL = "/"
+# перенаправление пользоввателя после выхода с личного кабинета
 LOGOUT_REDIRECT_URL = "/"
 
 
@@ -159,23 +161,21 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 # ACCOUNT_CONFIRM_EMAIL_ON_GET = True    # позволяет избежать дополнительного входа и активирует аккаунт сразу, как только мы перейдём по ссылке
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1    # хранит количество дней, когда доступна ссылка на подтверждение регистрации
 
-
 ACCOUNT_FORMS = {"signup": "accounts.forms.CustomSignupForm"}
-
 
 #EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
-EMAIL_HOST_USER = "newsportal-sf@yandex.ru"
-EMAIL_HOST_PASSWORD = "R%e!t_u!or@_0789!"
+EMAIL_HOST_USER = "newsportal@newsportal.ru"
+EMAIL_HOST_PASSWORD = "1111"
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 
-DEFAULT_FROM_EMAIL = "newsportal-sf@yandex.ru"
+DEFAULT_FROM_EMAIL = "newsportal@newsportal.ru"
 
-
-SERVER_EMAIL = "newsportal-sf@yandex.ru"
+SERVER_EMAIL = "newsportal@newsportal.ru"
 
 MANAGERS = (
     ('Ivan', 'ivan@yandex.ru'),
