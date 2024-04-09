@@ -5,9 +5,9 @@ from django.views.generic import (DetailView, ListView, CreateView, UpdateView, 
 from django.contrib.auth.decorators import login_required
 from django.db.models import Exists, OuterRef
 from django.views.decorators.csrf import csrf_protect
-from django.conf import settings
+# from django.conf import settings
 
-from .models import Post, Subscription, Category
+from .models import Post, Category, Subscriber
 from .filters import PostFilter
 from .forms import PostForm, EditForm
 
@@ -107,6 +107,7 @@ class PostSearch(ListView):
     template_name = 'flatpages/search.html'
     context_object_name = 'search'
     filterset_class = PostFilter
+    ordering = '-dateCreation'
     paginate_by = 10
 
     def get_queryset(self):
@@ -174,21 +175,22 @@ class PostDelete(PermissionRequiredMixin, DeleteView):
 @csrf_protect
 def subscriptions(request):
     if request.method == 'POST':
+        # user = request.user
         category_id = request.POST.get('category_id')
         category = Category.objects.get(id=category_id)
         action = request.POST.get('action')
 
         if action == 'subscribe':
-            Subscription.objects.create(user=request.user, category=category)
+            Subscriber.objects.create(user=request.user, category=category)
         elif action == 'unsubscribe':
-            Subscription.objects.filter(
+            Subscriber.objects.filter(
                 user=request.user,
                 category=category,
             ).delete()
 
     categories_with_subscriptions = Category.objects.annotate(
         user_subscribed=Exists(
-            Subscription.objects.filter(
+            Subscriber.objects.filter(
                 user=request.user,
                 category=OuterRef('pk'),
             )
@@ -197,5 +199,6 @@ def subscriptions(request):
     return render(
         request,
         'post/subscriptions.html',
+        # 'account/personal_cabinet.html',
         {'categories': categories_with_subscriptions},
     )

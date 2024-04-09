@@ -34,7 +34,7 @@ class Author(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=64, unique=True, verbose_name='Название категории')
     discription = models.TextField(verbose_name='Описание категории')
-    subscribers = models.ManyToManyField(User, blank=True, related_name='categories')
+    subscribers = models.ManyToManyField(User, blank=True, related_name='categories', verbose_name='Подписчики')
 
     def __str__(self):
         return self.name
@@ -60,7 +60,7 @@ class Post(models.Model):
     text = models.TextField(verbose_name='Текст публикации')
     rating = models.SmallIntegerField(default=0, verbose_name='Рейтинг публикации')
     author = models.ForeignKey(Author, on_delete=models.CASCADE, verbose_name='Автор публикации')
-    category = models.ManyToManyField(Category, verbose_name='Категория публикации')
+    category = models.ManyToManyField(Category, through='PostCategory', verbose_name='Категория публикации')
 
     # метод лайков
     def like(self):
@@ -87,6 +87,14 @@ class Post(models.Model):
         return self.title
 
 
+class PostCategory(models.Model):
+    post_through = models.ForeignKey(Post, on_delete=models.CASCADE)
+    category_through = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.post_through.title} | {self.category_through.name}'
+
+
 # создание модели Комментарии
 class Comment(models.Model):
     text = models.TextField()
@@ -110,14 +118,6 @@ class Comment(models.Model):
         verbose_name_plural = 'Комментарии'
 
 
-class Subscription(models.Model):
-    user = models.ForeignKey(
-        to=User,
-        on_delete=models.CASCADE,
-        related_name='subscriptions',
-    )
-    category = models.ForeignKey(
-        to='Category',
-        on_delete=models.CASCADE,
-        related_name='subscriptions',
-    )
+class Subscriber(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='subscriptions',)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='subscriptions',)
