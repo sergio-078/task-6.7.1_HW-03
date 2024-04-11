@@ -60,7 +60,7 @@ class Post(models.Model):
     text = models.TextField(verbose_name='Текст публикации')
     rating = models.SmallIntegerField(default=0, verbose_name='Рейтинг публикации')
     author = models.ForeignKey(Author, on_delete=models.CASCADE, verbose_name='Автор публикации')
-    category = models.ManyToManyField(Category, through='PostCategory', verbose_name='Категория публикации')
+    category = models.ManyToManyField(Category, verbose_name='Категория публикации')
 
     # метод лайков
     def like(self):
@@ -85,14 +85,6 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
-
-
-class PostCategory(models.Model):
-    post_through = models.ForeignKey(Post, on_delete=models.CASCADE)
-    category_through = models.ForeignKey(Category, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f'{self.post_through.title} | {self.category_through.name}'
 
 
 # создание модели Комментарии
