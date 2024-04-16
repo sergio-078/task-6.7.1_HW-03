@@ -34,7 +34,7 @@ class Author(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=64, unique=True, verbose_name='Название категории')
     discription = models.TextField(verbose_name='Описание категории')
-    subscribers = models.ManyToManyField(User, blank=True, related_name='categories', verbose_name='Подписчики')
+    subscribers = models.ManyToManyField(User, blank=True, related_name='categories', verbose_name='Подписчики', through='Subscriber')
 
     def __str__(self):
         return self.name

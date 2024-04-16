@@ -14,6 +14,9 @@ def notify_about_new_post(sender, instance, **kwargs):
         emails = User.objects.filter(
                 subscriptions__category__in=instance.category.all()
             ).values_list('email', flat=True)
+
+        print(f'Список email подписчиков: {emails}')
+
         subject = f'Новая публикация в категории: {", ".join(categories.values_list("name", flat=True))}'
         text_content = (
                 f'Заголовок: {instance.title}\n'

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.yandex',
+    'django_apscheduler',
 
     'post',
     'accounts',
@@ -163,6 +164,10 @@ ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1    # хранит количеств�
 
 ACCOUNT_FORMS = {"signup": "accounts.forms.CustomSignupForm"}
 
+
+SITE_URL = 'http://127.0.0.1:8000'
+
+
 #EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -185,3 +190,7 @@ MANAGERS = (
 ADMINS = (
     ('anton', 'anton@yandex.ru'),
 )
+
+
+APPSCHEDULER_DATETIME_FORMAT = 'N j, Y, f:s a'    # 'Y-m-d H:i:s'
+APPSCHEDULER_RUN_NOW_TIMEOUT = 25
